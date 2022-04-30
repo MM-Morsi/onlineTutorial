@@ -1,0 +1,128 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #434750;
+    /* overflow: hidden; */
+}
+
+.loader {
+    position: relative;
+    transform: skewY(-15deg) translateX(50px) translateY(50px);
+    transform-style: preserve-3d;
+    /* linear animation vs other types  */
+    animation: animateColor 2.5s linear infinite;
+}
+
+@keyframes animateColor {
+    0% {
+        filter: hue-rotate(0deg);
+    }
+
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+
+/* shadows beneath - for each span  */
+.loader::before {
+    /* without this the code breaks  */
+    content: '';
+    /* without this the code breaks  */
+    position: absolute;
+    /* pushing the square from top 300 px beneath the spans */
+    top: 300px;
+    width: 300px;
+    height: 200px;
+    background: rgba(0, 0, 0, 0.1);
+    transform-origin: bottom;
+    transform: skewX(45deg);
+    filter: blur(20px);
+}
+
+.loader span {
+    position: relative;
+    width: 200px;
+    background: #3e3f46;
+    height: 40px;
+    display: block;
+    transition: 0.5s;
+    animation: animate 5s ease-in-out infinite;
+    /* spans have different i */
+    z-index: var(--i);
+    animation-delay: calc(-1s * var(--i));
+}
+
+
+
+@keyframes animate {
+    0% {
+        transform: translateX(-70px);
+    }
+
+    50% {
+        transform: translateX(70px);
+    }
+
+    100% {
+        transform: translateX(-70px);
+    }
+}
+
+.loader span:hover {
+    background: #33a3ee;
+    /* instant coloring  */
+    transition: 0s;
+}
+
+.loader span::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150px;
+    width: 150px;
+    height: 100%;
+
+    /* this changes the color for some reason */
+    background: #ff0000;
+    /* change in color here is very subtle */
+    /* background: #2e3133; */
+
+    /* change the origin in 3d from center to right */
+    transform-origin: right;
+    transform: skewY(45deg);
+    transition: 0.5s;
+}
+
+.loader span:hover::before {
+    /* different hovering color */
+    background: #1f5378;
+    transition: 0s;
+}
+
+/* top of the spans */
+.loader span::after {
+    content: '';
+    position: absolute;
+    top: -150px;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    background: #35383e;
+    transform-origin: bottom;
+    transform: skewX(45deg);
+    transition: 0.5s;
+}
+
+/* top hovering color */
+.loader span:hover::after {
+    background: #2982b9;
+    transition: 0s;
+}
